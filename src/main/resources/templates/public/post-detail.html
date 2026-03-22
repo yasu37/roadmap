@@ -18,14 +18,6 @@
 				<strong>language:</strong>
 				<span th:text="${post.language}">ja-jp</span>
 			</p>
-			<p>
-				<strong>slug:</strong>
-				<span th:text="${post.slug}">intro-ja</span>
-			</p>
-			<p>
-				<strong>contentRef:</strong>
-				<span th:text="${post.contentRef}">posts/intro-ja.md</span>
-			</p>
 			<div class="actions">
 				<a class="button secondary" th:href="${postListUrl}">
 					<span th:text="${currentLang == 'ja-jp'} ? '記事一覧へ戻る' : '返回文章列表'">back</span>
@@ -34,12 +26,20 @@
 		</section>
 
 		<section class="card">
-			<h2 th:text="${currentLang == 'ja-jp'} ? '本文は次コミットで実装' : '正文将在下一次提交中实现'">body later</h2>
-			<p th:text="${post.excerpt}">excerpt</p>
+			<div th:utext="${publicHtml}"></div>
+		</section>
+
+		<section class="card" th:if="${showCta}">
+			<h2 th:text="${currentLang == 'ja-jp'} ? '続きは会員限定です' : '后续内容仅会员可见'">cta</h2>
+			<p th:text="${currentLang == 'ja-jp'} ? '会員登録またはログインで続きを読むことができます。' : '注册会员或登录后可继续阅读。'">
+				cta message
+			</p>
+		</section>
+
+		<section class="card" th:if="${showMemberOnly}">
+			<div th:utext="${memberOnlyHtml}"></div>
 		</section>
 	</main>
 
 	<div th:replace="~{fragments/footer :: siteFooter}"></div>
 </body>
-
-</html>

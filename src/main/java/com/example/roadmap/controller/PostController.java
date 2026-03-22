@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.example.roadmap.entity.Post;
+import com.example.roadmap.service.MarkdownContentService;
+import com.example.roadmap.service.MarkdownContentService.MarkdownView;
 import com.example.roadmap.service.PostService;
 
 @Controller
@@ -17,9 +19,11 @@ public class PostController {
 	private static final Set<String> SUPPORTED_LANGUAGES = Set.of("zh-cn", "ja-jp");
 
 	private final PostService postService;
+	private final MarkdownContentService markdownContentService;
 
-	public PostController(PostService postService) {
+	public PostController(PostService postService, MarkdownContentService markdownContentService) {
 		this.postService = postService;
+		this.markdownContentService = markdownContentService;
 	}
 
 	@GetMapping("/{lang}/posts")
@@ -45,10 +49,16 @@ public class PostController {
 		validateLanguage(lang);
 
 		Post post = postService.findPublishedPost(lang, slug);
+		MarkdownView markdownView = markdownContentService.loadForPublicView(post.getContentRef(), false);
 
 		model.addAttribute("currentLang", lang);
 		model.addAttribute("pageTitle", post.getTitle());
 		model.addAttribute("post", post);
+		model.addAttribute("publicHtml", markdownView.publicHtml());
+		model.addAttribute("memberOnlyHtml", markdownView.memberOnlyHtml());
+		model.addAttribute("hasSummaryBlock", markdownView.hasSummaryBlock());
+		model.addAttribute("showMemberOnly", markdownView.showMemberOnly());
+		model.addAttribute("showCta", markdownView.showCta());
 		model.addAttribute("otherLang", "zh-cn".equals(lang) ? "ja-jp" : "zh-cn");
 		model.addAttribute("otherLangUrl", "/" + ("zh-cn".equals(lang) ? "ja-jp" : "zh-cn"));
 		model.addAttribute("postListUrl", "/" + lang + "/posts");
