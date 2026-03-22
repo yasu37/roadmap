@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: commonHead(${pageTitle})}"></head>
+<body>
+<div th:replace="~{fragments/header :: siteHeader('zh-cn', 'ja-jp', '/ja-jp')}"></div>
+
+<main class="container main-content">
+    <section class="hero">
+        <h1>Profile</h1>
+        <p>ログイン後に表示されるプロフィール画面の仮ページです。</p>
+    </section>
+</main>
+
+<div th:replace="~{fragments/footer :: siteFooter}"></div>
+</body>
+</html>
