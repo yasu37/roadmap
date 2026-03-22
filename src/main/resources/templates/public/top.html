@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: commonHead(${pageTitle})}"></head>
+<body>
+<div th:replace="~{fragments/header :: siteHeader(${currentLang}, ${otherLang}, ${otherLangUrl})}"></div>
+
+<main class="container main-content">
+    <section class="hero">
+        <p class="lang-badge" th:text="'current language: ' + ${currentLang}">current language</p>
+        <h1 th:text="${currentLang == 'ja-jp'} ? '日本IT就職情報をわかりやすく整理するサービス' : '帮助在日中国留学生整理日本IT求职信息的服务'">
+            top message
+        </h1>
+        <p th:text="${currentLang == 'ja-jp'} ? 'まずはMVPのトップ画面です。ここから記事一覧へ進めます。' : '这是MVP阶段的首页，可以从这里进入文章列表。'">
+            description
+        </p>
+        <div class="actions">
+            <a class="button primary" th:href="${articleListUrl}">
+                <span th:text="${currentLang == 'ja-jp'} ? '記事一覧へ' : '查看文章列表'">articles</span>
+            </a>
+            <a class="button secondary" th:href="@{/register}">
+                <span th:text="${currentLang == 'ja-jp'} ? '会員登録' : '注册会员'">register</span>
+            </a>
+        </div>
+    </section>
+
+    <section class="card-grid">
+        <article class="card">
+            <h2 th:text="${currentLang == 'ja-jp'} ? 'このコミットで確認すること' : '本次提交要确认的内容'">check</h2>
+            <ul>
+                <li>Spring Boot が起動する</li>
+                <li>/ から /zh-cn へ遷移する</li>
+                <li>/zh-cn と /ja-jp が表示される</li>
+            </ul>
+        </article>
+    </section>
+</main>
+
+<div th:replace="~{fragments/footer :: siteFooter}"></div>
+</body>
+</html>       

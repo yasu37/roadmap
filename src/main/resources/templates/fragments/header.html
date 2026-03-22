@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<header th:fragment="siteHeader(currentLang, otherLang, otherLangUrl)">
+    <div class="container header-inner">
+        <div>
+            <a th:href="@{'/' + ${currentLang}}" class="site-title">日本IT内定ロードマップ</a>
+        </div>
+        <nav class="nav-links">
+            <a th:href="@{'/' + ${currentLang}}">Top</a>
+            <a th:href="@{'/' + ${currentLang} + '/posts'}">Posts</a>
+            <a th:href="${otherLangUrl}" th:text="${otherLang}">ja-jp</a>
+            <a th:href="@{/login}">Login</a>
+            <a th:href="@{/register}">Register</a>
+        </nav>
+    </div>
+</header>
+</body>
+</html>
