@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: commonHead(${pageTitle})}"></head>
+<body>
+<div th:replace="~{fragments/header :: siteHeader('zh-cn', 'ja-jp', '/ja-jp')}"></div>
+
+<main class="container main-content">
+    <section class="hero">
+        <h1>Admin Posts</h1>
+        <p>管理者向け記事一覧画面です。</p>
+    </section>
+
+    <section class="card">
+        <form th:action="@{/admin/posts}" th:object="${searchForm}" method="get">
+            <div>
+                <label for="title">Title</label><br>
+                <input id="title" th:field="*{title}" type="text">
+            </div>
+
+            <div style="margin-top: 16px;">
+                <label for="slug">Slug</label><br>
+                <input id="slug" th:field="*{slug}" type="text">
+            </div>
+
+            <div style="margin-top: 16px;">
+                <label for="status">Status</label><br>
+                <select id="status" th:field="*{status}">
+                    <option value="">-- all --</option>
+                    <option value="draft">draft</option>
+                    <option value="published">published</option>
+                </select>
+            </div>
+
+            <div class="actions" style="margin-top: 20px;">
+                <button class="button primary" type="submit">Search</button>
+                <a class="button secondary" th:href="@{/admin/posts}">Clear</a>
+            </div>
+        </form>
+    </section>
+
+    <section class="card" style="margin-top: 24px;">
+        <p><strong>Total:</strong> <span th:text="${totalCount}">0</span></p>
+
+        <div th:if="${posts == null or posts.isEmpty()}">
+            <p>該当する記事はありません。</p>
+        </div>
+
+        <table th:if="${posts != null and !posts.isEmpty()}" style="width:100%; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th align="left">Title</th>
+                    <th align="left">Slug</th>
+                    <th align="left">Language</th>
+                    <th align="left">Status</th>
+                    <th align="left">Updated At</th>
+                    <th align="left">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="post : ${posts}">
+                    <td th:text="${post.title}">title</td>
+                    <td th:text="${post.slug}">slug</td>
+                    <td th:text="${post.language}">ja-jp</td>
+                    <td th:text="${post.status}">draft</td>
+                    <td th:text="${post.updatedAt}">2026-03-22T00:00:00Z</td>
+                    <td>
+                        <a th:href="@{'/admin/posts/' + ${post.id} + '/preview'}">Preview</a>
+                        |
+                        <form th:action="@{'/admin/posts/' + ${post.id} + '/status'}" method="post" style="display:inline;">
+                            <input type="hidden" name="status"
+                                   th:value="${post.status == 'draft'} ? 'published' : 'draft'">
+                            <button type="submit"
+                                    th:text="${post.status == 'draft'} ? 'Publish' : 'Draft'">Change</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+
+<div th:replace="~{fragments/footer :: siteFooter}"></div>
+</body>
+</html>
