@@ -21,4 +21,9 @@ public class PostService {
 	public List<Post> findPublishedPostsByLanguage(String lang) {
 		return postRepository.findByLanguageAndStatusOrderByPublishedAtDesc(lang, PUBLISHED);
 	}
+
+	public Post findPublishedPost(String lang, String slug) {
+		return postRepository.findBySlugAndLanguageAndStatus(slug, lang, PUBLISHED)
+				.orElseThrow(() -> new IllegalArgumentException("Post not found: lang=" + lang + ", slug=" + slug));
+	}
 }

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/head :: commonHead(${pageTitle})}"></head>
+
+<body>
+	<div th:replace="~{fragments/header :: siteHeader(${currentLang}, ${otherLang}, ${otherLangUrl})}"></div>
+
+	<main class="container main-content">
+		<section class="hero">
+			<p class="lang-badge" th:text="'current language: ' + ${currentLang}">current language</p>
+			<h1 th:text="${post.title}">title</h1>
+			<p>
+				<strong>publishedAt:</strong>
+				<span th:text="${post.publishedAt}">2026-03-22T10:00:00Z</span>
+			</p>
+			<p>
+				<strong>language:</strong>
+				<span th:text="${post.language}">ja-jp</span>
+			</p>
+			<p>
+				<strong>slug:</strong>
+				<span th:text="${post.slug}">intro-ja</span>
+			</p>
+			<p>
+				<strong>contentRef:</strong>
+				<span th:text="${post.contentRef}">posts/intro-ja.md</span>
+			</p>
+			<div class="actions">
+				<a class="button secondary" th:href="${postListUrl}">
+					<span th:text="${currentLang == 'ja-jp'} ? '記事一覧へ戻る' : '返回文章列表'">back</span>
+				</a>
+			</div>
+		</section>
+
+		<section class="card">
+			<h2 th:text="${currentLang == 'ja-jp'} ? '本文は次コミットで実装' : '正文将在下一次提交中实现'">body later</h2>
+			<p th:text="${post.excerpt}">excerpt</p>
+		</section>
+	</main>
+
+	<div th:replace="~{fragments/footer :: siteFooter}"></div>
+</body>
+
+</html>

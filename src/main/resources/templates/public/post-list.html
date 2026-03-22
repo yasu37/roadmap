@@ -1,46 +1,51 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="~{fragments/head :: commonHead(${pageTitle})}"></head>
+
 <body>
-<div th:replace="~{fragments/header :: siteHeader(${currentLang}, ${otherLang}, ${otherLangUrl})}"></div>
+	<div th:replace="~{fragments/header :: siteHeader(${currentLang}, ${otherLang}, ${otherLangUrl})}"></div>
 
-<main class="container main-content">
-    <section class="hero">
-        <p class="lang-badge" th:text="'current language: ' + ${currentLang}">current language</p>
-        <h1 th:text="${currentLang == 'ja-jp'} ? '記事一覧' : '文章列表'">Post List</h1>
-        <p th:text="${currentLang == 'ja-jp'} ? '公開中の記事を一覧表示します。' : '这里显示已公开的文章。'">
-            description
-        </p>
-        <div class="actions">
-            <a class="button secondary" th:href="${topUrl}">
-                <span th:text="${currentLang == 'ja-jp'} ? 'トップへ戻る' : '返回首页'">back</span>
-            </a>
-        </div>
-    </section>
+	<main class="container main-content">
+		<section class="hero">
+			<p class="lang-badge" th:text="'current language: ' + ${currentLang}">current language</p>
+			<h1 th:text="${currentLang == 'ja-jp'} ? '記事一覧' : '文章列表'">Post List</h1>
+			<p th:text="${currentLang == 'ja-jp'} ? '公開中の記事を一覧表示します。' : '这里显示已公开的文章。'">
+				description
+			</p>
+			<div class="actions">
+				<a class="button secondary" th:href="${topUrl}">
+					<span th:text="${currentLang == 'ja-jp'} ? 'トップへ戻る' : '返回首页'">back</span>
+				</a>
+			</div>
+		</section>
 
-    <section class="card-grid" th:if="${posts != null and !posts.isEmpty()}">
-        <article class="card" th:each="post : ${posts}">
-            <h2 th:text="${post.title}">title</h2>
-            <p th:text="${post.excerpt}">excerpt</p>
-            <p>
-                <strong>publishedAt:</strong>
-                <span th:text="${post.publishedAt}">2026-03-22T10:00:00Z</span>
-            </p>
-            <p>
-                <strong>slug:</strong>
-                <span th:text="${post.slug}">intro-ja</span>
-            </p>
-        </article>
-    </section>
+		<section class="card-grid" th:if="${posts != null and !posts.isEmpty()}">
+			<article class="card" th:each="post : ${posts}">
+				<h2>
+					<a th:href="@{'/' + ${currentLang} + '/posts/' + ${post.slug}}" th:text="${post.title}">title</a>
+				</h2>
+				<p th:text="${post.excerpt}">excerpt</p>
+				<p>
+					<strong>publishedAt:</strong>
+					<span th:text="${post.publishedAt}">2026-03-22T10:00:00Z</span>
+				</p>
+				<p>
+					<strong>slug:</strong>
+					<span th:text="${post.slug}">intro-ja</span>
+				</p>
+			</article>
+		</section>
 
-    <section class="card" th:if="${posts == null or posts.isEmpty()}">
-        <h2 th:text="${currentLang == 'ja-jp'} ? '記事はまだありません' : '暂时还没有文章'">empty</h2>
-        <p th:text="${currentLang == 'ja-jp'} ? 'published の記事を追加するとここに表示されます。' : '添加 published 文章后会显示在这里。'">
-            no posts
-        </p>
-    </section>
-</main>
+		<section class="card" th:if="${posts == null or posts.isEmpty()}">
+			<h2 th:text="${currentLang == 'ja-jp'} ? '記事はまだありません' : '暂时还没有文章'">empty</h2>
+			<p th:text="${currentLang == 'ja-jp'} ? 'published の記事を追加するとここに表示されます。' : '添加 published 文章后会显示在这里。'">
+				no posts
+			</p>
+		</section>
+	</main>
 
-<div th:replace="~{fragments/footer :: siteFooter}"></div>
+	<div th:replace="~{fragments/footer :: siteFooter}"></div>
 </body>
+
 </html>
