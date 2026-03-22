@@ -7,7 +7,50 @@
 <main class="container main-content">
     <section class="hero">
         <h1>Profile</h1>
-        <p>ログイン後に表示されるプロフィール画面の仮ページです。</p>
+        <p>プロフィール入力 / 編集画面です。</p>
+    </section>
+
+    <section class="card">
+        <div th:if="${message}">
+            <p th:text="${message}">message</p>
+        </div>
+        <div th:if="${errorMessage}">
+            <p th:text="${errorMessage}">error</p>
+        </div>
+
+        <form th:action="@{/profile}" th:object="${profileForm}" method="post">
+            <div>
+                <label for="nickname">Nickname</label><br>
+                <input id="nickname" th:field="*{nickname}" type="text">
+            </div>
+
+            <div style="margin-top: 16px;">
+                <label for="ageRange">Age Range</label><br>
+                <select id="ageRange" th:field="*{ageRange}">
+                    <option value="">-- select --</option>
+                    <option value="18-20">18-20</option>
+                    <option value="21-23">21-23</option>
+                    <option value="24-26">24-26</option>
+                    <option value="27+">27+</option>
+                </select>
+            </div>
+
+            <div style="margin-top: 16px;">
+                <label for="occupation">Occupation</label><br>
+                <select id="occupation" th:field="*{occupation}">
+                    <option value="">-- select --</option>
+                    <option value="student">student</option>
+                    <option value="employee">employee</option>
+                    <option value="part-time">part-time</option>
+                    <option value="other">other</option>
+                </select>
+            </div>
+
+            <div class="actions" style="margin-top: 20px;">
+                <button class="button primary" type="submit">Save</button>
+                <a class="button secondary" th:if="${isFirstSetup}" th:href="@{/zh-cn}">Skip</a>
+            </div>
+        </form>
     </section>
 </main>
 
