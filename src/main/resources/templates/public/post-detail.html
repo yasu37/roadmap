@@ -1,45 +1,55 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head th:replace="~{fragments/head :: commonHead(${pageTitle})}"></head>
-
 <body>
-	<div th:replace="~{fragments/header :: siteHeader(${currentLang}, ${otherLang}, ${otherLangUrl})}"></div>
+<div th:replace="~{fragments/header :: siteHeader(${currentLang}, ${otherLang}, ${otherLangUrl})}"></div>
 
-	<main class="container main-content">
-		<section class="hero">
-			<p class="lang-badge" th:text="'current language: ' + ${currentLang}">current language</p>
-			<h1 th:text="${post.title}">title</h1>
-			<p>
-				<strong>publishedAt:</strong>
-				<span th:text="${post.publishedAt}">2026-03-22T10:00:00Z</span>
-			</p>
-			<p>
-				<strong>language:</strong>
-				<span th:text="${post.language}">ja-jp</span>
-			</p>
-			<div class="actions">
-				<a class="button secondary" th:href="${postListUrl}">
-					<span th:text="${currentLang == 'ja-jp'} ? '記事一覧へ戻る' : '返回文章列表'">back</span>
-				</a>
-			</div>
-		</section>
+<main class="container main-content">
+    <section class="hero">
+        <p class="lang-badge" th:text="'current language: ' + ${currentLang}">current language</p>
+        <h1 th:text="${post.title}">title</h1>
+        <p>
+            <strong>publishedAt:</strong>
+            <span th:text="${post.publishedAt}">2026-03-22T10:00:00Z</span>
+        </p>
+        <p>
+            <strong>language:</strong>
+            <span th:text="${post.language}">ja-jp</span>
+        </p>
+        <p>
+            <a th:href="${otherLangUrl}" th:text="${otherLang}">ja-jp</a>
+        </p>
+        <div class="actions">
+            <a class="button secondary" th:href="${postListUrl}">
+                <span th:text="${currentLang == 'ja-jp'} ? '記事一覧へ戻る' : '返回文章列表'">back</span>
+            </a>
+        </div>
+    </section>
 
-		<section class="card">
-			<div th:utext="${publicHtml}"></div>
-		</section>
+    <section class="card">
+        <div th:utext="${publicHtml}"></div>
+    </section>
 
-		<section class="card" th:if="${showCta}">
-			<h2 th:text="${currentLang == 'ja-jp'} ? '続きは会員限定です' : '后续内容仅会员可见'">cta</h2>
-			<p th:text="${currentLang == 'ja-jp'} ? '会員登録またはログインで続きを読むことができます。' : '注册会员或登录后可继续阅读。'">
-				cta message
-			</p>
-		</section>
+    <section class="card" th:if="${showCta}">
+        <h2 th:text="${currentLang == 'ja-jp'} ? '続きは会員限定です' : '后续内容仅会员可见'">cta</h2>
+        <p th:text="${currentLang == 'ja-jp'} ? 'ログインまたは会員登録で続きを読むことができます。' : '登录或注册后可继续阅读。'">
+            cta message
+        </p>
+        <div class="actions">
+            <a class="button primary" th:href="${loginUrl}">
+                <span th:text="${currentLang == 'ja-jp'} ? 'ログイン' : '登录'">login</span>
+            </a>
+            <a class="button secondary" th:href="${registerUrl}">
+                <span th:text="${currentLang == 'ja-jp'} ? '会員登録' : '注册会员'">register</span>
+            </a>
+        </div>
+    </section>
 
-		<section class="card" th:if="${showMemberOnly}">
-			<div th:utext="${memberOnlyHtml}"></div>
-		</section>
-	</main>
+    <section class="card" th:if="${showMemberOnly}">
+        <div th:utext="${memberOnlyHtml}"></div>
+    </section>
+</main>
 
-	<div th:replace="~{fragments/footer :: siteFooter}"></div>
+<div th:replace="~{fragments/footer :: siteFooter}"></div>
 </body>
+</html>

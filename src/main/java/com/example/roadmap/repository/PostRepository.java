@@ -10,7 +10,9 @@ import com.example.roadmap.entity.Post;
 
 public interface PostRepository extends JpaRepository<Post, UUID> {
 
-	List<Post> findByLanguageAndStatusOrderByPublishedAtDesc(String language, String status);
+    List<Post> findByLanguageAndStatusOrderByPublishedAtDesc(String language, String status);
 
-	Optional<Post> findBySlugAndLanguageAndStatus(String slug, String language, String status);
+    Optional<Post> findBySlugAndLanguageAndStatus(String slug, String language, String status);
+
+    Optional<Post> findByTranslationGroupIdAndLanguageAndStatus(UUID translationGroupId, String language, String status);
 }

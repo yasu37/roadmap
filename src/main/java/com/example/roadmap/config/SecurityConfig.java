@@ -10,8 +10,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.example.roadmap.security.LoginSuccessHandler;
+
 @Configuration
 public class SecurityConfig {
+
+	private final LoginSuccessHandler loginSuccessHandler;
+
+	public SecurityConfig(LoginSuccessHandler loginSuccessHandler) {
+		this.loginSuccessHandler = loginSuccessHandler;
+	}
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(
@@ -43,7 +51,7 @@ public class SecurityConfig {
 						.anyRequest().permitAll())
 				.formLogin(form -> form
 						.loginPage("/login")
-						.defaultSuccessUrl("/profile", true)
+						.successHandler(loginSuccessHandler)
 						.permitAll())
 				.logout(logout -> logout
 						.logoutSuccessUrl("/zh-cn")

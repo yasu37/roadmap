@@ -26,4 +26,11 @@ public class PostService {
 		return postRepository.findBySlugAndLanguageAndStatus(slug, lang, PUBLISHED)
 				.orElseThrow(() -> new IllegalArgumentException("Post not found: lang=" + lang + ", slug=" + slug));
 	}
+
+	public Post findPublishedSiblingPost(Post basePost, String targetLang) {
+		return postRepository.findByTranslationGroupIdAndLanguageAndStatus(
+				basePost.getTranslationGroupId(),
+				targetLang,
+				PUBLISHED).orElse(null);
+	}
 }

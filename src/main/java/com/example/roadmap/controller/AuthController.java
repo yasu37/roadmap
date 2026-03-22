@@ -1,5 +1,7 @@
 package com.example.roadmap.controller;
 
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +24,7 @@ public class AuthController {
 	}
 
 	@GetMapping("/login")
-	public String showLogin(Model model) {
+	public String showLogin(Model model, HttpSession session) {
 		model.addAttribute("pageTitle", "Login | 日本IT内定ロードマップ");
 		return "public/login";
 	}
@@ -70,4 +72,5 @@ public class AuthController {
 
 		return "public/verify-email-result";
 	}
+
 }

@@ -23,17 +23,18 @@ public class MarkdownContentService {
 		this.markdownRenderer = markdownRenderer;
 	}
 
-	public MarkdownView loadForPublicView(String contentRef, boolean loggedIn) {
+	public MarkdownView loadForView(String contentRef, boolean loggedIn) {
 		String raw = markdownLoader.load(contentRef);
 		ParsedMarkdown parsed = summaryBlockParser.parse(raw);
 
 		String publicHtml = markdownRenderer.render(parsed.publicPart());
-		String memberOnlyHtml = loggedIn
-				? markdownRenderer.render(parsed.memberOnlyPart())
-				: "";
+		String memberOnlyHtml = parsed.memberOnlyPart().isBlank()
+				? ""
+				: markdownRenderer.render(parsed.memberOnlyPart());
 
-		boolean showMemberOnly = loggedIn && parsed.hasSummaryBlock() && !parsed.memberOnlyPart().isBlank();
-		boolean showCta = !loggedIn && parsed.hasSummaryBlock() && !parsed.memberOnlyPart().isBlank();
+		boolean hasMemberOnlyPart = parsed.hasSummaryBlock() && !parsed.memberOnlyPart().isBlank();
+		boolean showMemberOnly = loggedIn && hasMemberOnlyPart;
+		boolean showCta = !loggedIn && hasMemberOnlyPart;
 
 		return new MarkdownView(
 				publicHtml,
