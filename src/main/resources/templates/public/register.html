@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: commonHead(${pageTitle})}"></head>
+<body>
+<div th:replace="~{fragments/header :: siteHeader('zh-cn', 'ja-jp', '/ja-jp')}"></div>
+
+<main class="container main-content">
+    <section class="hero">
+        <h1>Register</h1>
+        <p>会員登録画面です。</p>
+    </section>
+
+    <section class="card">
+        <div th:if="${errorMessage}">
+            <p th:text="${errorMessage}">error</p>
+        </div>
+
+        <form th:action="@{/register}" method="post">
+            <div>
+                <label for="email">Email</label><br>
+                <input id="email" name="email" type="email" required>
+            </div>
+
+            <div style="margin-top: 16px;">
+                <label for="password">Password</label><br>
+                <input id="password" name="password" type="password" required>
+            </div>
+
+            <div style="margin-top: 16px;">
+                <label for="confirmPassword">Confirm Password</label><br>
+                <input id="confirmPassword" name="confirmPassword" type="password" required>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <button class="button primary" type="submit">Register</button>
+            </div>
+        </form>
+
+        <div style="margin-top: 16px;">
+            <a th:href="@{/login}">ログインはこちら</a>
+        </div>
+    </section>
+</main>
+
+<div th:replace="~{fragments/footer :: siteFooter}"></div>
+</body>
+</html>

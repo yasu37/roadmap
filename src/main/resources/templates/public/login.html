@@ -1,46 +1,53 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="~{fragments/head :: commonHead(${pageTitle})}"></head>
+
 <body>
-<div th:replace="~{fragments/header :: siteHeader('zh-cn', 'ja-jp', '/ja-jp')}"></div>
+	<div th:replace="~{fragments/header :: siteHeader('zh-cn', 'ja-jp', '/ja-jp')}"></div>
 
-<main class="container main-content">
-    <section class="hero">
-        <h1>Login</h1>
-        <p>会員ログイン画面です。</p>
-    </section>
+	<main class="container main-content">
+		<section class="hero">
+			<h1>Login</h1>
+			<p>会員ログイン画面です。</p>
+		</section>
 
-    <section class="card">
-        <form th:action="@{/login}" method="post">
-            <div>
-                <label for="username">Email</label><br>
-                <input id="username" name="username" type="email" required>
-            </div>
+		<section class="card">
+			<form th:action="@{/login}" method="post">
+				<div>
+					<label for="username">Email</label><br>
+					<input id="username" name="username" type="email" required>
+				</div>
 
-            <div style="margin-top: 16px;">
-                <label for="password">Password</label><br>
-                <input id="password" name="password" type="password" required>
-            </div>
+				<div style="margin-top: 16px;">
+					<label for="password">Password</label><br>
+					<input id="password" name="password" type="password" required>
+				</div>
 
-            <div style="margin-top: 20px;">
-                <button class="button primary" type="submit">Login</button>
-            </div>
-        </form>
+				<div style="margin-top: 20px;">
+					<button class="button primary" type="submit">Login</button>
+				</div>
+			</form>
 
-        <div style="margin-top: 16px;" th:if="${param.error}">
-            <p>ログインに失敗しました。</p>
-        </div>
+			<div style="margin-top: 16px;" th:if="${message}">
+				<p th:text="${message}">message</p>
+			</div>
 
-        <div style="margin-top: 16px;" th:if="${param.logout}">
-            <p>ログアウトしました。</p>
-        </div>
+			<div style="margin-top: 16px;" th:if="${param.error}">
+				<p>ログインに失敗しました。</p>
+			</div>
 
-        <div style="margin-top: 16px;">
-            <a th:href="@{/register}">会員登録はこちら</a>
-        </div>
-    </section>
-</main>
+			<div style="margin-top: 16px;" th:if="${param.logout}">
+				<p>ログアウトしました。</p>
+			</div>
 
-<div th:replace="~{fragments/footer :: siteFooter}"></div>
+			<div style="margin-top: 16px;">
+				<a th:href="@{/register}">会員登録はこちら</a>
+			</div>
+		</section>
+	</main>
+
+	<div th:replace="~{fragments/footer :: siteFooter}"></div>
 </body>
+
 </html>
